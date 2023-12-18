@@ -7,3 +7,5 @@ func SetupRoutes(r *httprouter.Router) {
 	r.GET("/api/transactions", GetLast)
 	r.GET("/api/wallet/:address/balance", GetBalance)
 }
+
+//start
