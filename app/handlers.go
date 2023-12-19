@@ -7,7 +7,8 @@ import (
 )
 
 func Send(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("hello"))
 }
 
 // start

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"flag"
 	"fmt"
 	"log"
@@ -9,8 +10,10 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+var DB *sql.DB
+
 func main() {
-	//start
+
 	port := flag.Int("port", 8080, "Port for the server to listen on")
 	flag.Parse()
 	var addr string
@@ -18,6 +21,11 @@ func main() {
 		addr = fmt.Sprintf("localhost:%d", *port)
 	} else {
 		log.Fatalln("Invalid port")
+	}
+
+	err := OpenDB()
+	if err != nil {
+		log.Fatalln(err)
 	}
 
 	router := httprouter.New()
@@ -29,12 +37,9 @@ func main() {
 		Handler: router,
 	}
 
-	go func() {
-		log.Println("Hosting on: ", addr)
-		err := server.ListenAndServe()
-		if err != nil {
-			log.Fatalln(err)
-		}
-	}()
-	log.Println("Server is listeting on:", addr)
+	log.Println("Hosting on:", addr)
+	err = server.ListenAndServe()
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
