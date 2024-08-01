@@ -7,7 +7,11 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+var Users []User
+
 func main() {
+	InitDB()
+
 	router := httprouter.New()
 	SetupRouter(router)
 
